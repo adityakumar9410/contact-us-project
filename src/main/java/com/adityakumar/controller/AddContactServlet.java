@@ -37,7 +37,6 @@ public class AddContactServlet extends HttpServlet {
             insertMsg = "Success, data added successfully";
         }
 
-
         response.getWriter().println(insertMsg);
     }
 }
