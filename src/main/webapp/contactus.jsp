@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Contact Us</title>
-    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link href="css/contacts.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container">

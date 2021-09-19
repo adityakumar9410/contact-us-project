@@ -4,7 +4,10 @@ import com.adityakumar.model.Contact;
 import com.adityakumar.model.Request;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ContactUsAppDao {
@@ -12,19 +15,23 @@ public class ContactUsAppDao {
     private static final String PASSWORD = "Malak9410";
     private static final String CONN_STRING = "jdbc:postgresql://localhost:5432/contactsdb";
 
-    private static String insertQuery = "INSERT  INTO  contacts VALUES(?,?,?)";
+    private static String insertQuery = "INSERT  INTO  contacts VALUES(?,?,?,?,?)";
 
     public  int addContactToDb(Contact contact){
-        Connection conn=null;
+        Connection conn;
+        PreparedStatement statement;
         int rowsAdded =0;
         try {
             Class.forName("org.postgresql.Driver");
             conn= DriverManager.getConnection(CONN_STRING, USERNAME,PASSWORD);
-            PreparedStatement statement  = conn.prepareStatement(insertQuery);
+             statement  = conn.prepareStatement(insertQuery);
             statement.setString(1, contact.getFullName());
             statement.setString(2, contact.getEmail());
             statement.setString(3, contact.getMessage());
 
+            String contactDate = getContactDate();
+            statement.setString(4, contactDate);
+            statement.setBoolean(5, true);
             rowsAdded = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,6 +40,12 @@ public class ContactUsAppDao {
         }
 
         return  rowsAdded;
+    }
+
+    private String getContactDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd hh:mm");
+        Date date = Calendar.getInstance().getTime();
+        return  dateFormat.format(date);
     }
 
     public  boolean validateAdmin(String userName , String password){
