@@ -24,10 +24,10 @@ public class ContactUsAppDao {
     private static final int ADMIN_USERNAME = 1;
     private static final int ADMIN_PASSWORD = 2;
 
-    private static String contactInsertQuery = "INSERT  INTO  contacts VALUES(?,?,?,?,?)";
-    private static String adminSearchQuery = "SELECT * FROM admin WHERE  username=? AND password=?";
-    private static String contactsSearchQuery = "SELECT * FROM contacts";
-    private static String updateContactQuery = "UPDATE contacts  SET is_active = ?  WHERE contact_date = ?";
+    private static String CONTACT_INSERT_QUERY = "INSERT  INTO  contacts VALUES(?,?,?,?,?)";
+    private static String ADMIN_SEARCH_QUERY = "SELECT * FROM admin WHERE  username=? AND password=?";
+    private static String CONTACTS_SEARCH_QUERY = "SELECT * FROM contacts";
+    private static String UPDATE_CONTACT_QUERY = "UPDATE contacts  SET is_active = ?  WHERE contact_date = ?";
 
     public int addContactToDb(Contact contact) {
         Connection conn;
@@ -37,7 +37,7 @@ public class ContactUsAppDao {
         try {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
-            statement = conn.prepareStatement(contactInsertQuery);
+            statement = conn.prepareStatement(CONTACT_INSERT_QUERY);
             statement.setString(CONTACT_NAME, contact.getFullName());
             statement.setString(CONTACT_EMAIL, contact.getEmail());
             statement.setString(CONTACT_MSG, contact.getMessage());
@@ -67,7 +67,7 @@ public class ContactUsAppDao {
             //Connect to database
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
-            PreparedStatement preparedStatement = connection.prepareStatement(adminSearchQuery);
+            PreparedStatement preparedStatement = connection.prepareStatement(ADMIN_SEARCH_QUERY);
             //Set parameter with current admin
             preparedStatement.setString(ADMIN_USERNAME, username);
             preparedStatement.setString(ADMIN_PASSWORD, password);
@@ -95,7 +95,7 @@ public class ContactUsAppDao {
             conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
 
             Statement st = conn.createStatement();
-            rs = st.executeQuery(contactsSearchQuery);
+            rs = st.executeQuery(CONTACTS_SEARCH_QUERY);
             while (rs.next()) {
                 request = new Request();
                 request.setFullName(rs.getString(1));
@@ -121,8 +121,7 @@ public class ContactUsAppDao {
             //Connect to database
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
-
-            PreparedStatement statement = connection.prepareStatement(updateContactQuery);
+            PreparedStatement statement = connection.prepareStatement(UPDATE_CONTACT_QUERY);
             statement.setBoolean(1, contactState);
             statement.setString(2, contactDate);
             isUpdated = statement.executeUpdate() > 0;
