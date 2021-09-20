@@ -1,9 +1,9 @@
 package com.adityakumar.model;
 
 public class Contact {
-    private  String fullName;
-    private  String  email;
-    private  String  message;
+    private String fullName;
+    private String email;
+    private String message;
 
     public Contact(String fullName, String email, String message) {
         this.fullName = fullName;

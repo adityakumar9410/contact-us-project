@@ -1,10 +1,11 @@
-
 body{
     background-color: rgb(241, 238, 238);
 }
+
 div, textarea, input {
     box-sizing: border-box;
 }
+
 .container {
     max-width: 400px;
     min-width: 324px;
@@ -30,6 +31,7 @@ div, textarea, input {
     padding-bottom: 20px;
 
 }
+
 input{
     width: 350px;
 }
@@ -37,7 +39,6 @@ input{
     margin-left: 25px;
     margin-right: 25px;
 }
-
 
 .btn {
     display: inline-block;
@@ -72,13 +73,13 @@ form {
     width: 100px;
 
 }
+
 textarea {
     border: 1px solid grey;
     padding: 6px 10px;
     color: gray;
     margin-right: 50px;
 }
-
 
 .req{
     color: red;

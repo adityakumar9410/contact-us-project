@@ -15,128 +15,122 @@ public class ContactUsAppDao {
     private static final String PASSWORD = "Malak9410";
     private static final String CONN_STRING = "jdbc:postgresql://localhost:5432/contactsdb";
 
-    private static String insertQuery = "INSERT  INTO  contacts VALUES(?,?,?,?,?)";
+    private static final int CONTACT_NAME = 1;
+    private static final int CONTACT_EMAIL = 2;
+    private static final int CONTACT_MSG = 3;
+    private static final int CONTACT_DATE = 4;
+    private static final int CONTACT_STATUS = 5;
 
-    public  int addContactToDb(Contact contact){
+    private static final int ADMIN_USERNAME = 1;
+    private static final int ADMIN_PASSWORD = 2;
+
+    private static String contactInsertQuery = "INSERT  INTO  contacts VALUES(?,?,?,?,?)";
+    private static String adminSearchQuery = "SELECT * FROM admin WHERE  username=? AND password=?";
+    private static String contactsSearchQuery = "SELECT * FROM contacts";
+    private static String updateContactQuery = "UPDATE contacts  SET is_active = ?  WHERE contact_date = ?";
+
+    public int addContactToDb(Contact contact) {
         Connection conn;
         PreparedStatement statement;
-        int rowsAdded =0;
+        int rowsAdded = 0;
+
         try {
             Class.forName("org.postgresql.Driver");
-            conn= DriverManager.getConnection(CONN_STRING, USERNAME,PASSWORD);
-             statement  = conn.prepareStatement(insertQuery);
-            statement.setString(1, contact.getFullName());
-            statement.setString(2, contact.getEmail());
-            statement.setString(3, contact.getMessage());
-
+            conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+            statement = conn.prepareStatement(contactInsertQuery);
+            statement.setString(CONTACT_NAME, contact.getFullName());
+            statement.setString(CONTACT_EMAIL, contact.getEmail());
+            statement.setString(CONTACT_MSG, contact.getMessage());
             String contactDate = getContactDate();
-            statement.setString(4, contactDate);
-            statement.setBoolean(5, true);
+            statement.setString(CONTACT_DATE, contactDate);
+            statement.setBoolean(CONTACT_STATUS, true);
             rowsAdded = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-        return  rowsAdded;
+        return rowsAdded;
     }
 
     private String getContactDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd hh:mm");
         Date date = Calendar.getInstance().getTime();
-        return  dateFormat.format(date);
+        return dateFormat.format(date);
     }
 
-    public  boolean validateAdmin(String userName , String password){
-        boolean isValidAdmin=false;
-        Connection connection=null;
+    public boolean validateAdmin(String username, String password) {
+        boolean isValidAdmin = false;
+        Connection connection = null;
 
-        try{
+        try {
             //Connect to database
             Class.forName("org.postgresql.Driver");
-            connection=DriverManager.getConnection(CONN_STRING, USERNAME,PASSWORD);
-            //Write sql query to get admin data
-            String sql = "SELECT * FROM admin WHERE  username=? AND password=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            connection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+            PreparedStatement preparedStatement = connection.prepareStatement(adminSearchQuery);
             //Set parameter with current admin
-            preparedStatement.setString(1,userName);
-            preparedStatement.setString(2, password);
-
+            preparedStatement.setString(ADMIN_USERNAME, username);
+            preparedStatement.setString(ADMIN_PASSWORD, password);
             //Execute the statement and check whether admin exists or not
-
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                isValidAdmin=true;
+            while (resultSet.next()) {
+                isValidAdmin = true;
             }
-
-
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        }catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-        return  isValidAdmin;
+        return isValidAdmin;
     }
 
-
-    public List<Request> getAllRequests(){
-        Request  request;
+    public List<Request> getAllRequests() {
+        Request request;
         List<Request> requests = new ArrayList<>();
         Connection conn;
-        ResultSet   rs;
-
+        ResultSet rs;
         //Connect to database
         try {
             Class.forName("org.postgresql.Driver");
-            conn=DriverManager.getConnection(CONN_STRING, USERNAME,PASSWORD);
+            conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
 
-            String searchQuery = "SELECT * FROM contacts";
             Statement st = conn.createStatement();
-            rs= st.executeQuery(searchQuery);
-
-            while (rs.next()){
+            rs = st.executeQuery(contactsSearchQuery);
+            while (rs.next()) {
                 request = new Request();
                 request.setFullName(rs.getString(1));
                 request.setEmail(rs.getString(2));
                 request.setMessage(rs.getString(3));
                 request.setRequestDate(rs.getString(4));
                 request.setActive(rs.getBoolean(5));
-
                 requests.add(request);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return  requests;
+        return requests;
     }
 
-    public boolean updateContact(String contactDate, boolean  contactState) {
+    public boolean updateContact(String contactDate, boolean contactState) {
         boolean isUpdated = false;
-        Connection connection=null;
+        Connection connection = null;
 
-        try{
+        try {
             //Connect to database
             Class.forName("org.postgresql.Driver");
-            connection=DriverManager.getConnection(CONN_STRING, USERNAME,PASSWORD);
-            //Write sql query to update contacts table
-            String updateQuery = "update contacts  set  is_active = ?  where contact_date = ?;";
-            PreparedStatement statement = connection.prepareStatement(updateQuery);
+            connection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+
+            PreparedStatement statement = connection.prepareStatement(updateContactQuery);
             statement.setBoolean(1, contactState);
-            statement.setString(2,contactDate);
-
-
-            isUpdated= statement.executeUpdate()>0;
-
-        }catch (SQLException e) {
+            statement.setString(2, contactDate);
+            isUpdated = statement.executeUpdate() > 0;
+        } catch (SQLException e) {
             e.printStackTrace();
-        }catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return  isUpdated;
+        return isUpdated;
     }
-
 }

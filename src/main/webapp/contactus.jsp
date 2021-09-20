@@ -15,26 +15,25 @@
 
     <div class="form-head">
         <form action="contactus"  method="post">
-
             <p>
                 <label>Full Name<span class="req">*</span></label><br>
                 <input type="text" name="name" />
             </p>
-
             <p class="email-class">
                 <label>E-Mail <span class="req">*</span></label><br>
                 <input type="email" name="email" />
-
             </p>
             <p class="email-hint">example@gmail.com</p>
-
             <label>Message<span class="req">*</span></label><br>
             <textarea cols="40" rows="3" name="message"></textarea>
-
             <input class="btn " type="submit" value="SUBMIT" />
-
         </form>
     </div>
+    <h4>
+        <% if(request.getAttribute("insertMsg")!=null){%>
+        <%= request.getAttribute("insertMsg")%>
+        <%}%>
+    </h4>
 </div>
 </body>
 </html>

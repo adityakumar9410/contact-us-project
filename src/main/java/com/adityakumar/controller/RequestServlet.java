@@ -13,33 +13,31 @@ import java.util.List;
 public class RequestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         //Get all requests data from database
         ContactUsAppDao contactDao = new ContactUsAppDao();
         List<Request> requests = contactDao.getAllRequests();
 
         HttpSession session = request.getSession();
         session.setAttribute("requests", requests);
-
         request.getRequestDispatcher("requests.jsp").forward(request, response);
-
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean isUpdated;
         String contactDate = request.getParameter("date");
-        String  contactState = request.getParameter("isActive");
+        String contactState = request.getParameter("isActive");
         ContactUsAppDao dao = new ContactUsAppDao();
-        if(contactState.equals("true")){
-            isUpdated= dao.updateContact(contactDate, false);
-        }else{
-            isUpdated= dao.updateContact(contactDate, true);
+        if (contactState.equals("true")) {
+            isUpdated = dao.updateContact(contactDate, false);
+        } else {
+            isUpdated = dao.updateContact(contactDate, true);
         }
-        if (isUpdated){
+        if (isUpdated) {
             response.sendRedirect("requests");
         }
         response.getWriter().println("Error while updating");
     }
-
 }
+
 

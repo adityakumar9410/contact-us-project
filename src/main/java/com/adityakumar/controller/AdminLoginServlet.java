@@ -11,7 +11,7 @@ import java.io.IOException;
 public class AdminLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request,response);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     @Override
@@ -25,16 +25,15 @@ public class AdminLoginServlet extends HttpServlet {
         boolean isValidAdmin = contactDao.validateAdmin(userName, password);
 
         //Check if admin is valid
-        if(isValidAdmin){
+        if (isValidAdmin) {
             HttpSession session = request.getSession();
             session.setAttribute("username", userName);
             //Forward to  the requests page
-            request.getRequestDispatcher("requests.jsp").forward(request,response);
-        }else{
-            String errorMessage= "Invalid login credentials";
+            request.getRequestDispatcher("requests.jsp").forward(request, response);
+        } else {
+            String errorMessage = "Invalid login credentials";
             request.setAttribute("error", errorMessage);
-            request.getRequestDispatcher("login.jsp").forward(request,response);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-
     }
 }

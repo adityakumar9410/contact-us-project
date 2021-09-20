@@ -1,12 +1,11 @@
 package com.adityakumar.model;
 
 public class Request {
-
-    private  String fullName;
-    private  String email;
-    private String  message;
-    private  String   requestDate;
-    private  boolean  isActive;
+    private String fullName;
+    private String email;
+    private String message;
+    private String requestDate;
+    private boolean isActive;
 
     public String getFullName() {
         return fullName;

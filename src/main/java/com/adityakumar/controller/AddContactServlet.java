@@ -12,31 +12,29 @@ import javax.servlet.annotation.*;
 public class AddContactServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        req.getRequestDispatcher("contactus.jsp").forward(req,resp);
+        req.getRequestDispatcher("contactus.jsp").forward(req, resp);
     }
 
     @Override
-    protected void  doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Collect all form data
         String fullName = request.getParameter("name");
         String email = request.getParameter("email");
-        String message  = request.getParameter("message");
+        String message = request.getParameter("message");
 
         //Fill in Contact object
         Contact contact = new Contact(fullName, email, message);
-
         //Call the Dao layer and add data to DB
-        ContactUsAppDao  contactUsDao = new ContactUsAppDao();
-        int rows =   contactUsDao.addContactToDb(contact);
+        ContactUsAppDao contactUsDao = new ContactUsAppDao();
+        int rows = contactUsDao.addContactToDb(contact);
 
         String insertMsg = "";
-        if(rows==0){
+        if (rows == 0) {
             insertMsg = "Sorry an error occurred while  adding data";
-        }else{
+        } else {
             insertMsg = "Success, data added successfully";
         }
-
-        response.getWriter().println(insertMsg);
+        request.setAttribute("insertMsg", insertMsg);
+        request.getRequestDispatcher("contactus.jsp").forward(request, response);
     }
 }

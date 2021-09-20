@@ -9,7 +9,6 @@
     <link href="css/requests.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
 <%
     List<Request> requests;
     if ((ArrayList<Request>) session.getAttribute("requests") != null) {
@@ -20,17 +19,17 @@
     List<Request> activeRequests = new ArrayList<>();
     List<Request> archivedRequests = new ArrayList<>();
 
-    for (Request currRequest : requests) {
-        if (currRequest.isActive()) {
-            activeRequests.add(currRequest);
+    for (Request contactRequest : requests) {
+        if (contactRequest.isActive()) {
+            activeRequests.add(contactRequest);
         } else {
-            archivedRequests.add(currRequest);
+            archivedRequests.add(contactRequest);
         }
     }
 %>
-<div>
+<div class="container">
     <h1 style="text-align: center">Archived</h1>
-    <table style="width:100%; margin: 20px">
+    <table>
         <tr>
             <th>Full Name</th>
             <th>Email</th>
@@ -60,7 +59,6 @@
                     <input type="submit" value="ACTIVATE">
                 </form>
             </td>
-
         </tr>
         <%
                 }
@@ -68,7 +66,7 @@
         %>
     </table>
     <h1 style="text-align: center">Active</h1>
-    <table style="width:100%; margin: 20px">
+    <table>
         <tr>
             <th>Full Name</th>
             <th>Email</th>
@@ -77,9 +75,9 @@
             <th>Action</th>
         </tr>
         <%
-            Iterator<Request> iterator1 = activeRequests.iterator();
-            while (iterator1.hasNext()) {
-                Request req = iterator1.next();
+            Iterator<Request> itr = activeRequests.iterator();
+            while (itr.hasNext()) {
+                Request req = itr.next();
                 if ((req.isActive())) {
         %>
         <tr>
@@ -104,7 +102,6 @@
                 }
             }
         %>
-
     </table>
 </div>
 </body>

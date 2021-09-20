@@ -8,23 +8,16 @@ import java.io.IOException;
 
 @WebFilter("/*")
 public class AuthenticationFilter implements Filter {
-    public void init(FilterConfig config) throws ServletException {
-    }
-
-    public void destroy() {
-    }
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-        HttpServletRequest  httpServletRequest = (HttpServletRequest) request;
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
-        if(httpServletRequest.getRequestURI().startsWith("/ContactUsProject/requests")){
+        if (httpServletRequest.getRequestURI().startsWith("/ContactUsProject/requests")) {
             HttpSession session = httpServletRequest.getSession();
-            if(session.getAttribute("username")==null){
-                 httpServletRequest.getRequestDispatcher("login.jsp").forward(httpServletRequest, response);
+            if (session.getAttribute("username") == null) {
+                httpServletRequest.getRequestDispatcher("login.jsp").forward(httpServletRequest, response);
             }
         }
-
         chain.doFilter(httpServletRequest, response);
     }
 }

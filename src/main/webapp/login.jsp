@@ -13,13 +13,14 @@
         <label>Password</label><br>
         <input type="password" name="password"><br>
         <input type="submit" value="Login">
-
     </form>
 </div>
-
-
-<% if(request.getAttribute("error")!=null){%>
-<%= request.getAttribute("error")%><br>
-<%}%>
+<div class="container">
+       <h4>
+           <% if(request.getAttribute("error")!=null){%>
+           <%= request.getAttribute("error")%>
+           <%}%>
+       </h4>
+</div>
 </body>
 </html>
