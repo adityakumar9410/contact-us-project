@@ -1,11 +1,20 @@
 package com.adityakumar.model;
 
 public class Request {
+    private int requestId;
     private String fullName;
     private String email;
     private String message;
     private String requestDate;
     private boolean isActive;
+
+    public int getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+    }
 
     public String getFullName() {
         return fullName;

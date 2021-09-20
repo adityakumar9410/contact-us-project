@@ -53,7 +53,7 @@
             </td>
             <td>
                 <form action="requests" method="post">
-                    <input type="hidden" name="date" value="<%= archivedRequest.getRequestDate()%>">
+                    <input type="hidden" name="requestId" value="<%= archivedRequest.getRequestId()%>">
                     <input type="hidden" name="isActive" value="<%=archivedRequest.isActive()%>">
                     <input type="submit" value="ACTIVATE">
                 </form>
@@ -88,7 +88,7 @@
             </td>
             <td>
                 <form action="requests" method="post">
-                    <input type="hidden" name="date" value="<%= activeRequest.getRequestDate()%>">
+                    <input type="hidden" name="requestId" value="<%= activeRequest.getRequestId()%>">
                     <input type="hidden" name="isActive" value="<%=activeRequest.isActive()%>">
                     <input type="submit" value="PROCESS">
                 </form>

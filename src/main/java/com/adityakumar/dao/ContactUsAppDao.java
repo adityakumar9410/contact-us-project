@@ -21,13 +21,23 @@ public class ContactUsAppDao {
     private static final int CONTACT_DATE = 4;
     private static final int CONTACT_STATUS = 5;
 
+    private  static final int REQUEST_ID =1;
+    private  static final int REQUEST_NAME =2;
+    private  static final int REQUEST_EMAIL =3;
+    private  static final int REQUEST_MSG =4;
+    private  static final int REQUEST_DATE =5;
+    private  static final int REQUEST_STATUS =6;
+
     private static final int ADMIN_USERNAME = 1;
     private static final int ADMIN_PASSWORD = 2;
 
-    private static String CONTACT_INSERT_QUERY = "INSERT  INTO  contacts VALUES(?,?,?,?,?)";
+    private  static final  int UPDATE_STATUS_ID = 1;
+    private  static final  int UPDATE_ID =2;
+
+    private static String CONTACT_INSERT_QUERY = "INSERT  INTO  contacts(full_name, email, message, contact_date, is_active) VALUES(?,?,?,?,?)";
     private static String ADMIN_SEARCH_QUERY = "SELECT * FROM admin WHERE  username=? AND password=?";
-    private static String CONTACTS_SEARCH_QUERY = "SELECT * FROM contacts";
-    private static String UPDATE_CONTACT_QUERY = "UPDATE contacts  SET is_active = ?  WHERE contact_date = ?";
+    private static String REQUEST_SEARCH_QUERY = "SELECT * FROM contacts";
+    private static String UPDATE_CONTACT_QUERY = "UPDATE contacts  SET is_active = ?  WHERE contact_id = ?";
 
     public int addContactToDb(Contact contact) {
         Connection conn;
@@ -38,6 +48,7 @@ public class ContactUsAppDao {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
             statement = conn.prepareStatement(CONTACT_INSERT_QUERY);
+
             statement.setString(CONTACT_NAME, contact.getFullName());
             statement.setString(CONTACT_EMAIL, contact.getEmail());
             statement.setString(CONTACT_MSG, contact.getMessage());
@@ -95,14 +106,15 @@ public class ContactUsAppDao {
             conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
 
             Statement st = conn.createStatement();
-            rs = st.executeQuery(CONTACTS_SEARCH_QUERY);
+            rs = st.executeQuery(REQUEST_SEARCH_QUERY);
             while (rs.next()) {
                 request = new Request();
-                request.setFullName(rs.getString(1));
-                request.setEmail(rs.getString(2));
-                request.setMessage(rs.getString(3));
-                request.setRequestDate(rs.getString(4));
-                request.setActive(rs.getBoolean(5));
+                request.setRequestId(rs.getInt(REQUEST_ID));
+                request.setFullName(rs.getString(REQUEST_NAME));
+                request.setEmail(rs.getString(REQUEST_EMAIL));
+                request.setMessage(rs.getString(REQUEST_MSG));
+                request.setRequestDate(rs.getString(REQUEST_DATE));
+                request.setActive(rs.getBoolean(REQUEST_STATUS));
                 requests.add(request);
             }
         } catch (ClassNotFoundException e) {
@@ -113,7 +125,7 @@ public class ContactUsAppDao {
         return requests;
     }
 
-    public boolean updateContact(String contactDate, boolean contactState) {
+    public boolean updateContact(int  contactId, boolean contactState) {
         boolean isUpdated = false;
         Connection connection = null;
 
@@ -122,8 +134,8 @@ public class ContactUsAppDao {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
             PreparedStatement statement = connection.prepareStatement(UPDATE_CONTACT_QUERY);
-            statement.setBoolean(1, contactState);
-            statement.setString(2, contactDate);
+            statement.setBoolean(UPDATE_STATUS_ID, contactState);
+            statement.setInt(UPDATE_ID, contactId);
             isUpdated = statement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

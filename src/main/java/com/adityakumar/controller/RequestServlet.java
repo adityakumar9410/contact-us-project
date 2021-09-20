@@ -25,13 +25,13 @@ public class RequestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean isUpdated;
-        String contactDate = request.getParameter("date");
+        int  contactId =Integer.parseInt(request.getParameter("requestId"));
         String contactState = request.getParameter("isActive");
         ContactUsAppDao dao = new ContactUsAppDao();
         if (contactState.equals("true")) {
-            isUpdated = dao.updateContact(contactDate, false);
+            isUpdated = dao.updateContact(contactId, false);
         } else {
-            isUpdated = dao.updateContact(contactDate, true);
+            isUpdated = dao.updateContact(contactId, true);
         }
         if (isUpdated) {
             response.sendRedirect("requests");
