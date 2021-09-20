@@ -9,6 +9,9 @@
     <link href="css/requests.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+       <div>
+             <a href="logout"><H2>Logout</H2></a>
+       </div>
 <%
     List<Request> requests;
     if ((ArrayList<Request>) session.getAttribute("requests") != null) {

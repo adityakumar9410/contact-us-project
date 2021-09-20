@@ -16,11 +16,23 @@
     </form>
 </div>
 <div class="container">
-       <h4>
-           <% if(request.getAttribute("error")!=null){%>
-           <%= request.getAttribute("error")%>
-           <%}%>
-       </h4>
+    <h4>
+        <% if (request.getAttribute("error") != null) {%>
+        <%= request.getAttribute("error")%>
+        <%}%>
+    </h4>
 </div>
+<div class="container">
+    <h4>
+        <%
+            String logoutMessage = (String) session.getAttribute("logout-msg");
+            if (logoutMessage != null) {%>
+        <%= logoutMessage%>
+        <%
+            }
+        %>
+    </h4>
+</div>
+
 </body>
 </html>
