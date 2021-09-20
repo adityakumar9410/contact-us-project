@@ -38,30 +38,28 @@
             <th>Action</th>
         </tr>
         <%
-            Iterator<Request> iterator = archivedRequests.iterator();
-            while (iterator.hasNext()) {
-                Request req = iterator.next();
-                if (!(req.isActive())) {
+            Iterator<Request> archivedRequestIterator = archivedRequests.iterator();
+            while (archivedRequestIterator.hasNext()) {
+                Request archivedRequest = archivedRequestIterator.next();
         %>
         <tr>
-            <td><%=  req.getFullName()%>
+            <td><%=  archivedRequest.getFullName()%>
             </td>
-            <td><%=  req.getEmail()%>
+            <td><%=  archivedRequest.getEmail()%>
             </td>
-            <td><%=  req.getMessage()%>
+            <td><%=  archivedRequest.getMessage()%>
             </td>
-            <td><%=  req.getRequestDate()%>
+            <td><%=  archivedRequest.getRequestDate()%>
             </td>
             <td>
                 <form action="requests" method="post">
-                    <input type="hidden" name="date" value="<%= req.getRequestDate()%>">
-                    <input type="hidden" name="isActive" value="<%=req.isActive()%>">
+                    <input type="hidden" name="date" value="<%= archivedRequest.getRequestDate()%>">
+                    <input type="hidden" name="isActive" value="<%=archivedRequest.isActive()%>">
                     <input type="submit" value="ACTIVATE">
                 </form>
             </td>
         </tr>
         <%
-                }
             }
         %>
     </table>
@@ -75,31 +73,29 @@
             <th>Action</th>
         </tr>
         <%
-            Iterator<Request> itr = activeRequests.iterator();
-            while (itr.hasNext()) {
-                Request req = itr.next();
-                if ((req.isActive())) {
+            Iterator<Request> activeRequestIterator = activeRequests.iterator();
+            while (activeRequestIterator.hasNext()) {
+                Request activeRequest = activeRequestIterator.next();
         %>
         <tr>
-            <td><%=  req.getFullName()%>
+            <td><%=  activeRequest.getFullName()%>
             </td>
-            <td><%=  req.getEmail()%>
+            <td><%=  activeRequest.getEmail()%>
             </td>
-            <td><%=  req.getMessage()%>
+            <td><%=  activeRequest.getMessage()%>
             </td>
-            <td><%=  req.getRequestDate()%>
+            <td><%=  activeRequest.getRequestDate()%>
             </td>
             <td>
                 <form action="requests" method="post">
-                    <input type="hidden" name="date" value="<%= req.getRequestDate()%>">
-                    <input type="hidden" name="isActive" value="<%=req.isActive()%>">
+                    <input type="hidden" name="date" value="<%= activeRequest.getRequestDate()%>">
+                    <input type="hidden" name="isActive" value="<%=activeRequest.isActive()%>">
                     <input type="submit" value="PROCESS">
                 </form>
             </td>
 
         </tr>
         <%
-                }
             }
         %>
     </table>
