@@ -7,4 +7,6 @@ table {
     margin-right: 25px;
 
 }
-
+tr , td,th{
+    width: 20%
+}

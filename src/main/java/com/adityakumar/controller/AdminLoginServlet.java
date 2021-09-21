@@ -29,7 +29,7 @@ public class AdminLoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("username", userName);
             //Forward to  the requests page
-            request.getRequestDispatcher("requests.jsp").forward(request, response);
+            response.sendRedirect("requests");
         } else {
             String errorMessage = "Invalid login credentials";
             request.setAttribute("error", errorMessage);

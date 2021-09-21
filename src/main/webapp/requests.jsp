@@ -9,7 +9,7 @@
     <link href="css/requests.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-       <div>
+       <div style="float: right">
              <a href="logout"><H2>Logout</H2></a>
        </div>
 <%
