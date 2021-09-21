@@ -2,39 +2,36 @@
 <html>
 <head>
     <title>Admin</title>
-    <link href="css/login.css" rel="stylesheet" type="text/css">
+    <link href="css/logins.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container">
-    <h2 class="login-heading">Admin Login</h2>
-    <div class="form-head">
+    <div class="login-form">
+        <h2>Admin Login</h2>
         <form action="login" method="post">
             <label>UserName</label><br>
             <input type="text" name="username"><br>
             <label>Password</label><br>
             <input type="password" name="password"><br>
-            <input type="submit" value="Login">
+            <input class="btn" type="submit" value="Login">
         </form>
-    </div>
+        <div>
+            <h4>
+                <% if (request.getAttribute("error") != null) {%>
+                <%= request.getAttribute("error")%>
+                <%}%>
+            </h4>
 
-
-     <div >
-         <h4>
-           <% if (request.getAttribute("error") != null) {%>
-           <%= request.getAttribute("error")%>
-           <%}%>
-        </h4>
-    </div>
-     <div >
-         <h4>
-           <%
-            String logoutMessage = (String) session.getAttribute("logout-msg");
-            if (logoutMessage != null) {%>
-          <%= logoutMessage%>
-           <%
-            }
-           %>
-        </h4>
+            <h4>
+                <%
+                    String logoutMessage = (String) session.getAttribute("logout-msg");
+                    if (logoutMessage != null) {%>
+                <%= logoutMessage%>
+                <%
+                    }
+                %>
+            </h4>
+        </div>
     </div>
 </div>
 </body>

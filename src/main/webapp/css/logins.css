@@ -1,0 +1,33 @@
+body{
+    background-color: rgb(241, 238, 238);
+}
+
+.container {
+    max-width: 400px;
+    min-width: 324px;
+    margin: 50px auto 0px;
+    background-color: white;
+    border : 1px solid gray;
+    border-bottom: 3px solid gray;
+}
+.login-form{
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+div, input{
+    box-sizing: border-box;
+}
+input{
+    width: 350px;
+}
+.btn {
+    display: inline-block;
+    text-align: center;
+    padding: 0.74em 1.5em;
+    width: fit-content;
+    margin-bottom: 20px;
+    margin-left: 140px;
+    margin-top: 15px;
+}
+
