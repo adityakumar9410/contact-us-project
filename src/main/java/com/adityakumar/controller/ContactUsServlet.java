@@ -1,7 +1,8 @@
 package com.adityakumar.controller;
 
-import com.adityakumar.dao.ContactUsAppDao;
-import com.adityakumar.model.Contact;
+import com.adityakumar.dao.ContactUsDao;
+import com.adityakumar.model.Request;
+import com.adityakumar.model.User;
 
 import java.io.*;
 import javax.servlet.ServletException;
@@ -9,7 +10,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 @WebServlet("/contactus")
-public class AddContactServlet extends HttpServlet {
+public class ContactUsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("contactus.jsp").forward(req, resp);
@@ -28,12 +29,15 @@ public class AddContactServlet extends HttpServlet {
          }
 
          if(fullName.length() >0 && email.length()> 0 && message.length()>0){
-             //Fill in Contact object
-             Contact contact = new Contact(fullName, email, message);
+             //Fill in Request object
+             Request  contactRequest = new Request();
+             contactRequest.setFullName(fullName);
+             contactRequest.setEmail(email);
+             contactRequest.setMessage(message);
              //Call the Dao layer and add data to DB
-             ContactUsAppDao contactUsDao = new ContactUsAppDao();
-             int rows = contactUsDao.addContactToDb(contact);
-             if (rows == 0) {
+             ContactUsDao contactUsDao = new ContactUsDao();
+             int rowsAdded = contactUsDao.saveContact(contactRequest);
+             if (rowsAdded == 0) {
                  insertMsg = "Sorry an error occurred while  adding data";
              } else {
                  insertMsg = "Success, data added successfully";

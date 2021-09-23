@@ -24,7 +24,7 @@
 
             <h4>
                 <%
-                    String logoutMessage = (String) session.getAttribute("logout-msg");
+                    String logoutMessage = (String) session.getAttribute("logoutMsg");
                     if (logoutMessage != null) {%>
                 <%= logoutMessage%>
                 <%
